@@ -3,6 +3,7 @@
 import time
 import requests
 
+from logger import logger
 from parser import Parser
 from rules import *
 
@@ -30,7 +31,7 @@ class AlgorizumCrawler(object):
     @url.setter
     def url(self, _url):
         if not isinstance(_url, str):
-            raise TypeError("main_url must be str type not %s" % type(_url))
+            raise TypeError("url must be str type not %s" % type(_url))
 
         self.__url = _url
 
@@ -41,7 +42,7 @@ class AlgorizumCrawler(object):
     @user.setter
     def user(self, _user):
         if not isinstance(_user, (str, list)):
-            raise TypeError("main_url must be str type not %s" % type(_user))
+            raise TypeError("user must be str type not %s" % type(_user))
 
         self.__user = [_user] if isinstance(_user, str) else _user
 
@@ -53,6 +54,8 @@ class AlgorizumCrawler(object):
         result_dict = dict()
 
         for idx, user_id in enumerate(self.__user, 1):
+            logger.info("user[%s] download..." % user_id)
+
             down_url = Urls.normalize_user_url(self.__url, user_id=user_id)
             response = requests.get(down_url)
             result_dict[user_id] = response.content
