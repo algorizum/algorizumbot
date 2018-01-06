@@ -1,6 +1,10 @@
 # -*- coding:utf8 -*-
 
+import re
 from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
+
+from rules import DateTimeText
 
 
 class Parser(object):
@@ -15,6 +19,26 @@ class Parser(object):
         #
 
         self.rules = rules
+
+    @staticmethod
+    def parse_datetime(text):
+        """
+
+        :param text: string
+        :return: datetime
+        """
+
+        today = datetime.today()
+
+        for match, val in DateTimeText.match_text.items():
+            result = re.match(match, text)
+            if result is not None:
+                delta = int(result.group(1)) * val
+                break
+        else:
+            raise ValueError("Unknown pattern text %s" % text)
+
+        return today + timedelta(seconds=delta)
 
     def parse(self, html):
         result_dict = {}

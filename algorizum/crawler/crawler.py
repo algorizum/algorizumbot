@@ -74,7 +74,7 @@ class AlgorizumCrawler(object):
         for user_id, html in html_dict.items():
             user_result = dict()
             parsing_result = self.parser.parse(html)
-            user_result[AlgorizumRules.recent_published_date] = DateTimeText.normalize_datetime(
+            user_result[AlgorizumRules.recent_published_date] = self.parser.parse_datetime(
                 parsing_result[AlgorizumRules.recent_published_date])
             result_dict[user_id] = user_result
 
