@@ -20,7 +20,7 @@ def test():
     for user in algospot_user:
         user_recent_published_date = result[user][AlgorizumRules.recent_published_date]
         if today != user_recent_published_date:
-            print "no result", user, 'recent published', user_recent_published_date.strftime("%Y년 %m월 %d일")
+            print "no result", user, 'recent published', user_recent_published_date.strftime("%Y년 %m월 %d일 %H시 %M분")
 
 
 if __name__ == "__main__":
